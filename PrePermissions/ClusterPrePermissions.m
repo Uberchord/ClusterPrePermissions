@@ -24,7 +24,7 @@
 //  SOFTWARE.
 //
 @import UIKit;
-@import Contacts;
+@import AddressBook;
 @import Photos;
 @import EventKit;
 @import CoreLocation;
@@ -122,15 +122,15 @@ static ClusterPrePermissions *__sharedInstance;
 
 + (ClusterAuthorizationStatus) contactsPermissionAuthorizationStatus
 {
-    CNAuthorizationStatus status = [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts];
+  ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
     switch (status) {
-        case CNAuthorizationStatusAuthorized:
+        case kABAuthorizationStatusAuthorized:
             return ClusterAuthorizationStatusAuthorized;
 
-        case CNAuthorizationStatusDenied:
+        case kABAuthorizationStatusDenied:
             return ClusterAuthorizationStatusDenied;
 
-        case CNAuthorizationStatusRestricted:
+        case kABAuthorizationStatusRestricted:
             return ClusterAuthorizationStatusRestricted;
 
         default:
@@ -498,8 +498,8 @@ static ClusterPrePermissions *__sharedInstance;
     denyButtonTitle  = [self titleFor:ClusterTitleTypeDeny fromTitle:denyButtonTitle];
     grantButtonTitle = [self titleFor:ClusterTitleTypeRequest fromTitle:grantButtonTitle];
   
-    CNAuthorizationStatus status = [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts];
-    if (status == CNAuthorizationStatusNotDetermined) {
+  ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
+    if (status == kABAuthorizationStatusNotDetermined) {
         self.contactPermissionCompletionHandler = completionHandler;
       return [self prePermissionControllerWithTitle:requestTitle message:message denyButtonTitle:denyButtonTitle grantButtonTitle:grantButtonTitle authorized:^{
         [self showActualContactPermissionAlert];
@@ -508,7 +508,7 @@ static ClusterPrePermissions *__sharedInstance;
       }];
     } else {
         if (completionHandler) {
-            completionHandler((status == CNAuthorizationStatusAuthorized),
+            completionHandler((status == kABAuthorizationStatusAuthorized),
                               ClusterDialogResultNoActionTaken,
                               ClusterDialogResultNoActionTaken);
         }
@@ -519,34 +519,34 @@ static ClusterPrePermissions *__sharedInstance;
 
 - (void) showActualContactPermissionAlert
 {
-    [[CNContactStore new] requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * error){
-      dispatch_async(dispatch_get_main_queue(), ^{
-        [self fireContactPermissionCompletionHandler];
-      });
-    }];
+  ABAddressBookRequestAccessWithCompletion(ABAddressBookCreate(), ^(bool granted, CFErrorRef error) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self fireContactPermissionCompletionHandler];
+    });
+  });
 }
 
 
 - (void) fireContactPermissionCompletionHandler
 {
-  CNAuthorizationStatus status = [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts];
+  ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
   if (self.contactPermissionCompletionHandler) {
       ClusterDialogResult userDialogResult = ClusterDialogResultGranted;
       ClusterDialogResult systemDialogResult = ClusterDialogResultGranted;
-      if (status == CNAuthorizationStatusNotDetermined) {
+      if (status == kABAuthorizationStatusNotDetermined) {
           userDialogResult = ClusterDialogResultDenied;
           systemDialogResult = ClusterDialogResultNoActionTaken;
-      } else if (status == CNAuthorizationStatusAuthorized) {
+      } else if (status == kABAuthorizationStatusAuthorized) {
           userDialogResult = ClusterDialogResultGranted;
           systemDialogResult = ClusterDialogResultGranted;
-      } else if (status == CNAuthorizationStatusDenied) {
+      } else if (status == kABAuthorizationStatusDenied) {
           userDialogResult = ClusterDialogResultGranted;
           systemDialogResult = ClusterDialogResultDenied;
-      } else if (status == CNAuthorizationStatusRestricted) {
+      } else if (status == kABAuthorizationStatusRestricted) {
           userDialogResult = ClusterDialogResultGranted;
           systemDialogResult = ClusterDialogResultParentallyRestricted;
       }
-      self.contactPermissionCompletionHandler((status == CNAuthorizationStatusAuthorized),
+      self.contactPermissionCompletionHandler((status == kABAuthorizationStatusAuthorized),
                                               userDialogResult,
                                               systemDialogResult);
       self.contactPermissionCompletionHandler = nil;

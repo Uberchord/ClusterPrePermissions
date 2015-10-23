@@ -17,6 +17,7 @@
 		4A21A2331BD9AC20005235F2 /* PrePermissions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrePermissions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A21A2351BD9AC21005235F2 /* PrePermissions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrePermissions.h; sourceTree = "<group>"; };
 		4A21A2371BD9AC21005235F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A21A2421BDAB6E6005235F2 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		65C599C918F35A4500AE202C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65C599CB18F35A4500AE202C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		65C599CD18F35A4500AE202C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -68,6 +69,7 @@
 		65C599C818F35A4500AE202C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A21A2421BDAB6E6005235F2 /* Contacts.framework */,
 				65C599C918F35A4500AE202C /* Foundation.framework */,
 				65C599CB18F35A4500AE202C /* CoreGraphics.framework */,
 				65C599CD18F35A4500AE202C /* UIKit.framework */,
@@ -179,7 +181,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PrePermissions/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.uberchord.PrePermissions;
@@ -207,7 +209,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PrePermissions/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.uberchord.PrePermissions;
