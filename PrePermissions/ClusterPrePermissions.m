@@ -807,6 +807,9 @@ static ClusterPrePermissions *__sharedInstance;
 
 - (void)present:(UIViewController *)viewController
 {
+  if (viewController == nil) {
+    return;
+  }
   [[[UIApplication sharedApplication].windows firstObject].rootViewController presentViewController:viewController animated:YES completion:nil];
 }
 
