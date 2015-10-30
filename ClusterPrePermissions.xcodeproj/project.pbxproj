@@ -11,6 +11,8 @@
 		4A21A23B1BD9AC2B005235F2 /* ClusterPrePermissions.h in Headers */ = {isa = PBXBuildFile; fileRef = 65D1AF1518F4B3BA005ACA29 /* ClusterPrePermissions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4A21A23C1BD9AC2B005235F2 /* ClusterPrePermissions.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D1AF1618F4B3BA005ACA29 /* ClusterPrePermissions.m */; };
 		4A21A23D1BD9AC94005235F2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C599CD18F35A4500AE202C /* UIKit.framework */; };
+		4A4C711A1BE39D0D00582FE2 /* UIApplication+TopmostViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A4C71181BE39D0D00582FE2 /* UIApplication+TopmostViewController.h */; };
+		4A4C711B1BE39D0D00582FE2 /* UIApplication+TopmostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4C71191BE39D0D00582FE2 /* UIApplication+TopmostViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +20,8 @@
 		4A21A2351BD9AC21005235F2 /* PrePermissions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrePermissions.h; sourceTree = "<group>"; };
 		4A21A2371BD9AC21005235F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A21A2421BDAB6E6005235F2 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
+		4A4C71181BE39D0D00582FE2 /* UIApplication+TopmostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+TopmostViewController.h"; sourceTree = "<group>"; };
+		4A4C71191BE39D0D00582FE2 /* UIApplication+TopmostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+TopmostViewController.m"; sourceTree = "<group>"; };
 		65C599C918F35A4500AE202C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65C599CB18F35A4500AE202C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		65C599CD18F35A4500AE202C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -43,6 +47,8 @@
 			children = (
 				65D1AF1518F4B3BA005ACA29 /* ClusterPrePermissions.h */,
 				65D1AF1618F4B3BA005ACA29 /* ClusterPrePermissions.m */,
+				4A4C71181BE39D0D00582FE2 /* UIApplication+TopmostViewController.h */,
+				4A4C71191BE39D0D00582FE2 /* UIApplication+TopmostViewController.m */,
 				4A21A2351BD9AC21005235F2 /* PrePermissions.h */,
 				4A21A2371BD9AC21005235F2 /* Info.plist */,
 			);
@@ -87,6 +93,7 @@
 			files = (
 				4A21A23B1BD9AC2B005235F2 /* ClusterPrePermissions.h in Headers */,
 				4A21A2361BD9AC21005235F2 /* PrePermissions.h in Headers */,
+				4A4C711A1BE39D0D00582FE2 /* UIApplication+TopmostViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,6 +165,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A4C711B1BE39D0D00582FE2 /* UIApplication+TopmostViewController.m in Sources */,
 				4A21A23C1BD9AC2B005235F2 /* ClusterPrePermissions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

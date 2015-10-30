@@ -31,6 +31,7 @@
 @import AVFoundation;
 
 #import "ClusterPrePermissions.h"
+#import "UIApplication+TopmostViewController.h"
 
 typedef NS_ENUM(NSInteger, ClusterTitleType) {
   ClusterTitleTypeRequest = 0,
@@ -810,7 +811,7 @@ static ClusterPrePermissions *__sharedInstance;
   if (viewController == nil) {
     return;
   }
-  [[[UIApplication sharedApplication].windows firstObject].rootViewController presentViewController:viewController animated:YES completion:nil];
+  [[[UIApplication sharedApplication] topMostViewController] presentViewController:viewController animated:YES completion:nil];
 }
 
 
