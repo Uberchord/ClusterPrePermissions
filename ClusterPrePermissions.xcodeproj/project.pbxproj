@@ -11,7 +11,7 @@
 		4A21A23B1BD9AC2B005235F2 /* ClusterPrePermissions.h in Headers */ = {isa = PBXBuildFile; fileRef = 65D1AF1518F4B3BA005ACA29 /* ClusterPrePermissions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4A21A23C1BD9AC2B005235F2 /* ClusterPrePermissions.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D1AF1618F4B3BA005ACA29 /* ClusterPrePermissions.m */; };
 		4A21A23D1BD9AC94005235F2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C599CD18F35A4500AE202C /* UIKit.framework */; };
-		4A4C711A1BE39D0D00582FE2 /* UIApplication+TopmostViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A4C71181BE39D0D00582FE2 /* UIApplication+TopmostViewController.h */; };
+		4A4C711A1BE39D0D00582FE2 /* UIApplication+TopmostViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A4C71181BE39D0D00582FE2 /* UIApplication+TopmostViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4A4C711B1BE39D0D00582FE2 /* UIApplication+TopmostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4C71191BE39D0D00582FE2 /* UIApplication+TopmostViewController.m */; };
 /* End PBXBuildFile section */
 
