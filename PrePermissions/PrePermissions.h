@@ -17,3 +17,4 @@ FOUNDATION_EXPORT const unsigned char PrePermissionsVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <PrePermissions/PublicHeader.h>
 
 #import <PrePermissions/ClusterPrePermissions.h>
+#import <PrePermissions/UIApplication+TopmostViewController.h>
