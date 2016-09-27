@@ -120,7 +120,6 @@ typedef void (^ClusterPrePermissionCompletionHandler)(BOOL hasPermission,
 + (ClusterAuthorizationStatus) microphonePermissionAuthorizationStatus;
 + (ClusterAuthorizationStatus) photoPermissionAuthorizationStatus;
 + (ClusterAuthorizationStatus) contactsPermissionAuthorizationStatus;
-+ (ClusterAuthorizationStatus) eventPermissionAuthorizationStatus:(ClusterEventAuthorizationType)eventType;
 + (ClusterAuthorizationStatus) locationPermissionAuthorizationStatus;
 + (ClusterAuthorizationStatus) pushNotificationPermissionAuthorizationStatus;
 
@@ -186,19 +185,6 @@ typedef void (^ClusterPrePermissionCompletionHandler)(BOOL hasPermission,
                          grantButtonTitle:(NSString *)grantButtonTitle
                         completionHandler:(ClusterPrePermissionCompletionHandler)completionHandler;
 
-- (UIViewController *) eventPermissionsWithType:(ClusterEventAuthorizationType)eventType
-                                Title:(NSString *)requestTitle
-                                  message:(NSString *)message
-                          denyButtonTitle:(NSString *)denyButtonTitle
-                         grantButtonTitle:(NSString *)grantButtonTitle
-                        completionHandler:(ClusterPrePermissionCompletionHandler)completionHandler;
-
-- (void) showEventPermissionsWithType:(ClusterEventAuthorizationType)eventType
-                                Title:(NSString *)requestTitle
-                              message:(NSString *)message
-                      denyButtonTitle:(NSString *)denyButtonTitle
-                     grantButtonTitle:(NSString *)grantButtonTitle
-                    completionHandler:(ClusterPrePermissionCompletionHandler)completionHandler;
 - (UIViewController *) locationPermissionsWithTitle:(NSString *)requestTitle
                                             message:(NSString *)message
                                     denyButtonTitle:(NSString *)denyButtonTitle

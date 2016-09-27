@@ -26,7 +26,6 @@
 @import UIKit;
 @import AddressBook;
 @import Photos;
-@import EventKit;
 @import CoreLocation;
 @import AVFoundation;
 
@@ -58,7 +57,6 @@ NSString *const ClusterPrePermissionsDidAskForPushNotifications = @"ClusterPrePe
 @property (copy, nonatomic) ClusterPrePermissionCompletionHandler pushNotificationPermissionCompletionHandler;
 
 - (NSString *)titleFor:(ClusterTitleType)titleType fromTitle:(NSString *)title;
-- (NSUInteger)EKEquivalentEventType:(ClusterEventAuthorizationType)eventType;
 
 @end
 
@@ -132,25 +130,6 @@ static ClusterPrePermissions *__sharedInstance;
             return ClusterAuthorizationStatusDenied;
 
         case kABAuthorizationStatusRestricted:
-            return ClusterAuthorizationStatusRestricted;
-
-        default:
-            return ClusterAuthorizationStatusUnDetermined;
-    }
-}
-
-+ (ClusterAuthorizationStatus) eventPermissionAuthorizationStatus:(ClusterEventAuthorizationType)eventType
-{
-    EKAuthorizationStatus status = [EKEventStore authorizationStatusForEntityType:
-                  [[ClusterPrePermissions sharedPermissions] EKEquivalentEventType:eventType]];
-    switch (status) {
-        case EKAuthorizationStatusAuthorized:
-            return ClusterAuthorizationStatusAuthorized;
-
-        case EKAuthorizationStatusDenied:
-            return ClusterAuthorizationStatusDenied;
-
-        case EKAuthorizationStatusRestricted:
             return ClusterAuthorizationStatusRestricted;
 
         default:
@@ -554,95 +533,6 @@ static ClusterPrePermissions *__sharedInstance;
   }
 }
 
-#pragma mark - Event Permissions Help
-
-
-- (UIViewController *) eventPermissionsWithType:(ClusterEventAuthorizationType)eventType
-                                Title:(NSString *)requestTitle
-                              message:(NSString *)message
-                      denyButtonTitle:(NSString *)denyButtonTitle
-                     grantButtonTitle:(NSString *)grantButtonTitle
-                    completionHandler:(ClusterPrePermissionCompletionHandler)completionHandler
-{
-    if (requestTitle.length == 0) {
-        switch (eventType) {
-            case ClusterEventAuthorizationTypeEvent:
-                requestTitle = @"Access Calendar?";
-                break;
-
-            default:
-                requestTitle = @"Access Reminders?";
-                break;
-        }
-    }
-    denyButtonTitle  = [self titleFor:ClusterTitleTypeDeny fromTitle:denyButtonTitle];
-    grantButtonTitle = [self titleFor:ClusterTitleTypeRequest fromTitle:grantButtonTitle];
-
-    EKAuthorizationStatus status = [EKEventStore authorizationStatusForEntityType:[self EKEquivalentEventType:eventType]];
-    if (status == EKAuthorizationStatusNotDetermined) {
-        self.eventPermissionCompletionHandler = completionHandler;
-      return [self prePermissionControllerWithTitle:requestTitle message:message denyButtonTitle:denyButtonTitle grantButtonTitle:grantButtonTitle authorized:^{
-        [self showActualEventPermissionAlert:eventType];
-      } denied:^{
-        [self fireEventPermissionCompletionHandler:eventType];
-      }];
-    } else {
-        if (completionHandler) {
-            completionHandler((status == EKAuthorizationStatusAuthorized),
-                              ClusterDialogResultNoActionTaken,
-                              ClusterDialogResultNoActionTaken);
-        }
-    }
-  return nil;
-}
-
-
-- (void) showActualEventPermissionAlert:(ClusterEventAuthorizationType)eventType
-{
-    EKEventStore *aStore = [[EKEventStore alloc] init];
-    [aStore requestAccessToEntityType:[self EKEquivalentEventType:eventType] completion:^(BOOL granted, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self fireEventPermissionCompletionHandler:eventType];
-        });
-    }];
-}
-
-
-- (void) fireEventPermissionCompletionHandler:(ClusterEventAuthorizationType)eventType
-{
-    EKAuthorizationStatus status = [EKEventStore authorizationStatusForEntityType:[self EKEquivalentEventType:eventType]];
-    if (self.eventPermissionCompletionHandler) {
-        ClusterDialogResult userDialogResult = ClusterDialogResultGranted;
-        ClusterDialogResult systemDialogResult = ClusterDialogResultGranted;
-        if (status == EKAuthorizationStatusNotDetermined) {
-            userDialogResult = ClusterDialogResultDenied;
-            systemDialogResult = ClusterDialogResultNoActionTaken;
-        } else if (status == EKAuthorizationStatusAuthorized) {
-            userDialogResult = ClusterDialogResultGranted;
-            systemDialogResult = ClusterDialogResultGranted;
-        } else if (status == EKAuthorizationStatusDenied) {
-            userDialogResult = ClusterDialogResultGranted;
-            systemDialogResult = ClusterDialogResultDenied;
-        } else if (status == EKAuthorizationStatusRestricted) {
-            userDialogResult = ClusterDialogResultGranted;
-            systemDialogResult = ClusterDialogResultParentallyRestricted;
-        }
-        self.eventPermissionCompletionHandler((status == EKAuthorizationStatusAuthorized),
-                                              userDialogResult,
-                                              systemDialogResult);
-        self.eventPermissionCompletionHandler = nil;
-    }
-}
-
-- (NSUInteger)EKEquivalentEventType:(ClusterEventAuthorizationType)eventType {
-    if (eventType == ClusterEventAuthorizationTypeEvent) {
-        return EKEntityTypeEvent;
-    }
-    else {
-        return EKEntityTypeReminder;
-    }
-}
-
 #pragma mark - Location Permission Help
 
 
@@ -774,11 +664,6 @@ static ClusterPrePermissions *__sharedInstance;
 - (void)showContactsPermissionsWithTitle:(NSString *)requestTitle message:(NSString *)message denyButtonTitle:(NSString *)denyButtonTitle grantButtonTitle:(NSString *)grantButtonTitle completionHandler:(ClusterPrePermissionCompletionHandler)completionHandler
 {
   [self present:[self contactsPermissionsWithTitle:requestTitle message:message denyButtonTitle:denyButtonTitle grantButtonTitle:grantButtonTitle completionHandler:completionHandler]];
-}
-
-- (void)showEventPermissionsWithType:(ClusterEventAuthorizationType)eventType Title:(NSString *)requestTitle message:(NSString *)message denyButtonTitle:(NSString *)denyButtonTitle grantButtonTitle:(NSString *)grantButtonTitle completionHandler:(ClusterPrePermissionCompletionHandler)completionHandler
-{
-  [self present:[self eventPermissionsWithType:eventType Title:requestTitle message:message denyButtonTitle:denyButtonTitle grantButtonTitle:grantButtonTitle completionHandler:completionHandler]];
 }
 
 - (void)showLocationPermissionsForAuthorizationType:(ClusterLocationAuthorizationType)authorizationType title:(NSString *)requestTitle message:(NSString *)message denyButtonTitle:(NSString *)denyButtonTitle grantButtonTitle:(NSString *)grantButtonTitle completionHandler:(ClusterPrePermissionCompletionHandler)completionHandler
